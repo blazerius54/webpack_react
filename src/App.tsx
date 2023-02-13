@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-// import '/src/App.css';
+import '/src/App.css';
 
 export default function App() {
 
@@ -14,7 +14,7 @@ export default function App() {
 
     return (
         <div>
-            <h2>Employess</h2>
+            <h1>Employess</h1>
             <ul>
                 {data.map(record => {
                     return <li>{record.name}</li>;
