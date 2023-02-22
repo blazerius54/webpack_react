@@ -5,3 +5,8 @@ h1 {
 ul {
     list-style: none
 }
+
+h1:hover{
+    color: #2435ce;
+    text-decoration: underline;
+}

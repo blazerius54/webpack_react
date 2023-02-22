@@ -1,21 +1,22 @@
 import React from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '/src/App.css';
 import EmployeeList from "./pages/EmployeeList";
 import EmployeeCard from "./pages/EmployeeCard";
-import {BrowserRouter, Route, Routes, Link} from '../node_modules/react-router-dom/dist/index';
+import Layout from "./pages/Layout";
 
 export default function App() {
 
-
     return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<EmployeeList/>}></Route>
-                    <Route path="/employee" element={<EmployeeCard/>}> </Route>
-                </Routes>
-            </BrowserRouter>
-        </>
+
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<EmployeeList/>}/>
+                    <Route path="employee/:id" element={<EmployeeCard/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

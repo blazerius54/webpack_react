@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import '/src/App.css';
+import {Link} from "react-router-dom";
+
 
 export default function EmployeeList() {
 
@@ -8,17 +10,17 @@ export default function EmployeeList() {
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users/')
             .then(response => response.json())
-            // .then(json => console.log(json))
             .then(json => setData(json))
         }, [])
 
     return (
         <div>
-            <h1>Employees</h1>
             <ul>
-                {data.map(record => {
-                    return <li key={record.id}>{record.name}</li>;
-                })}
+                {data.map(record => (
+                    <Link  key={record.id} to={'/employee/' + record.id}>
+                        <li>{record.name}</li>
+                    </Link>
+                ))}
             </ul>
         </div>
     );
