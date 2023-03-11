@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '/src/App.css';
 import EmployeeList from "./pages/EmployeeList";
 import EmployeeCard from "./pages/EmployeeCard";
-import Layout from "./pages/Layout";
+import Layout from "./components/Layout";
 
 export default function App() {
 

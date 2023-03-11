@@ -6,10 +6,42 @@ import ButtonEdit from "../components/ButtonEdit";
 import ButtonSave from "../components/ButtonSave";
 import EmployeeCard from "./EmployeeCard";
 
+interface Employee {
+    name: string,
+    email: string,
+    phone: string,
+    username: string,
+    website: string
+}
+
 export default function EmployeeEdit(props: any) {
 
     const {id} = useParams();
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<Employee | null>(null);
+
+    const [inputName, setName] = useState(data.name);
+    const [inputEmail, setEmail] = useState(data.email);
+    const [inputPhone, setPhone] = useState(data.phone);
+    const [inputUsername, setUsername] = useState(data.username);
+    const [inputWebsite, setWebsite] = useState(data.website);
+
+    function sendRequest() {
+        const request = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: inputName,
+                email: inputEmail,
+                phone: inputPhone,
+                username: inputUsername,
+                website: inputWebsite
+            })
+        };
+        fetch('https://jsonplaceholder.typicode.com/users/' + id, request)
+            .then(response => response.json())
+            .then(json => setData(json));
+        console.log(request)
+    }
 
     // useEffect(() => {
     //     const request = {
