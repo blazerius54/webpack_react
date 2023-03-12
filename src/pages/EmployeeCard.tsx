@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '/src/App.css';
 import {Link, useParams} from 'react-router-dom'
 import checkWebsite from "../Utils/AppUtil";
-import ButtonEdit from "../components/ButtonEdit";
-import ButtonSave from "../components/ButtonSave";
+import ButtonCustom from "../components/ButtonCustom";
 import EmployeeEdit from "./EmployeeEdit";
 
 interface Employee {
@@ -17,7 +16,7 @@ interface Employee {
 export default function EmployeeCard() {
 
     const {id} = useParams();
-    const [data, setData] = useState<Employee| null>(null);
+    const [data, setData] = useState<Employee | null>(null);
     const [isEdit, setEdit] = useState(false);
 
 
@@ -27,33 +26,46 @@ export default function EmployeeCard() {
             .then(json => setData(json))
     }, [id])
 
+    const onclick = () => {
+        setEdit(true)
+    }
     return (
         <>
-                <div>
-                    <p>
-                        name: {data.name}
-                    </p>
-                    <p>
-                        email: {data.email}
-                    </p>
-                    <p>
-                        phone: {data.phone}
-                    </p>
-                    <p>
-                        username: {data.username}
-                    </p>
-                    {
-                        checkWebsite(data.website).valueOf() ?
+            {isEdit.valueOf() ? <EmployeeEdit
+                    email={data.email}
+                    name={data.name}
+                    phone={data.phone}
+                    username={data.username}
+                    website={data.website}/>
+                :
+                data && (
+                    <>
+                        <div>
                             <p>
-                                website: {data.website}
+                                name: {data.name}
                             </p>
-                            : null
-                    }
-                </div>
-            {/*<div>*/}
-            {/*    <button onClick={onClickEditWrapper} disabled={isEdit}> Edit</button>*/}
-            {/*    <button onClick={onClickSaveWrapper} disabled={!isEdit}>Save</button>*/}
-            {/*</div>*/}
+                            <p>
+                                email: {data.email}
+                            </p>
+                            <p>
+                                phone: {data.phone}
+                            </p>
+                            <p>
+                                username: {data.username}
+                            </p>
+                            {checkWebsite(data.website).valueOf() ?
+                                <p>
+                                    website: {data.website}
+                                </p>
+                                : null}
+                        </div>
+                        <div>
+                            <ButtonCustom onClick={onclick} isDisabled={isEdit} buttonName={"Edit"}/>
+                            <ButtonCustom onClick={null} isDisabled={!isEdit} buttonName={"Save"}/>
+                        </div>
+                    </>
+                )
+            }
         </>
-    );
+    )
 }

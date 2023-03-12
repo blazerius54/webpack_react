@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '/src/App.css';
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import checkWebsite from "../Utils/AppUtil";
-import ButtonEdit from "../components/ButtonEdit";
-import ButtonSave from "../components/ButtonSave";
-import EmployeeCard from "./EmployeeCard";
+import ButtonCustom from "../components/ButtonCustom";
 
 interface Employee {
     name: string,
@@ -14,16 +12,18 @@ interface Employee {
     website: string
 }
 
-export default function EmployeeEdit(props: any) {
+export default function EmployeeEdit({name, email, phone, username, website}: Employee) {
 
     const {id} = useParams();
+    // const {save} = useParams()
     const [data, setData] = useState<Employee | null>(null);
+    const navigate = useNavigate();
 
-    const [inputName, setName] = useState(data.name);
-    const [inputEmail, setEmail] = useState(data.email);
-    const [inputPhone, setPhone] = useState(data.phone);
-    const [inputUsername, setUsername] = useState(data.username);
-    const [inputWebsite, setWebsite] = useState(data.website);
+    const [inputName, setName] = useState(name);
+    const [inputEmail, setEmail] = useState(email);
+    const [inputPhone, setPhone] = useState(phone);
+    const [inputUsername, setUsername] = useState(username);
+    const [inputWebsite, setWebsite] = useState(website);
 
     function sendRequest() {
         const request = {
@@ -43,40 +43,42 @@ export default function EmployeeEdit(props: any) {
         console.log(request)
     }
 
-    // useEffect(() => {
-    //     const request = {
-    //         method: 'PUT',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify({title: 'React Hooks PUT Request Example'})
-    //     };
-    //     fetch('https://jsonplaceholder.typicode.com/users/' + id, request)
-    //         .then(response => response.json())
-    //         .then(json => setData(json));
-    // }, [id])
+    const onclick = () => {
+        sendRequest();
+        navigate(0);
+    }
 
-    let inputUser = JSON.parse(JSON.stringify(props));
 
     return (
         <>
             <div>
-                <p> name:<input name="name" defaultValue={inputUser.name}/></p>
-                <p> email: <input name="email" defaultValue={inputUser.email}/></p>
-                <p> phone: <input name="phone" defaultValue={inputUser.phone}/></p>
-                <p> username: <input name="username" defaultValue={inputUser.username}/></p>
+                <p> name:<input name="name" defaultValue={name} onChange={(e) => {
+                    setName(e.target.value)
+                }}/></p>
+                <p> email: <input name="email" defaultValue={email} onChange={(e) => {
+                    setEmail(e.target.value)
+                }}/></p>
+                <p> phone: <input name="phone" defaultValue={phone} onChange={(e) => {
+                    setPhone(e.target.value)
+                }}/></p>
+                <p> username: <input name="username" defaultValue={username} onChange={(e) => {
+                    setUsername(e.target.value)
+                }}/></p>
                 {
-                    checkWebsite(inputUser.website).valueOf() ?
+                    checkWebsite(website).valueOf() ?
                         <p>
-                            website: <input name="username"
-                                            defaultValue={props.website}/>
-                        </p>
+                            website: <input name="website"
+                                            defaultValue={website} onChange={(e) => {
+                            setWebsite(e.target.value)
+                        }}/></p>
                         : null
 
                 }
             </div>
             <div>
-                <button> Edit</button>
-                <button>Save</button>
+                <ButtonCustom onClick={null} isDisabled={true} buttonName={"Edit"}/>
+                <ButtonCustom onClick={onclick} isDisabled={false} buttonName={"Save"}/>
             </div>
         </>
-    );
+    )
 }
