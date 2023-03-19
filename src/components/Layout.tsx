@@ -1,5 +1,5 @@
 import React from 'react';
-import '/src/App.css';
+import '/src/app.css';
 import {Link, Outlet} from "react-router-dom";
 
 export default function Layout() {

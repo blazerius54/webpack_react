@@ -1,0 +1,36 @@
+h1 {
+    text-align:center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1:hover{
+    color: #2435ce;
+    text-decoration: underline;
+}
+
+button {
+    background-color: #979ea8;
+    border: none;
+    color: #979ea8;;
+    padding: 8px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #1071e5;
+    /*color:  #1071e5;*/
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

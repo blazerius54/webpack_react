@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import '/src/App.css';
+import '/src/app.css';
 import {Link} from "react-router-dom";
 import Loader from "../components/Loader";
 

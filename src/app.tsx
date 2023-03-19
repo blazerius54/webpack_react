@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import '/src/App.css';
+import '/src/app.css';
 import EmployeeList from "./pages/EmployeeList";
 import EmployeeCard from "./pages/EmployeeCard";
 import Layout from "./components/Layout";

@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import '/src/App.css';
+import '/src/app.css';
 import {Link, useParams} from 'react-router-dom'
-import checkWebsite from "../Utils/AppUtil";
+import checkWebsite from "../utils/appUtil";
 import ButtonCustom from "../components/ButtonCustom";
-import EmployeeEdit from "./EmployeeEdit";
 import Loader from "../components/Loader";
+import EmployeeView from "./EmployeeView";
 
-interface Employee {
+export interface Employee {
     name: string,
     email: string,
     phone: string,
     username: string,
     website: string,
+    setEmployeeInfo: any,
 }
 
 export default function EmployeeCard() {
@@ -32,6 +33,13 @@ export default function EmployeeCard() {
     const onclick = () => {
         setEdit(true)
     }
+
+    const setEmployeeInfo = (param: keyof Employee, value: string) => {
+        setData((prev) => (
+            {
+            [param] : value}
+            ))
+    }
     return (
         isLoaded ?
             <>
@@ -43,33 +51,17 @@ export default function EmployeeCard() {
                         website={data.website}/>
                     :
                     data && (
-                        <>
-                            <div>
-                                <p>
-                                    name: {data.name}
-                                </p>
-                                <p>
-                                    email: {data.email}
-                                </p>
-                                <p>
-                                    phone: {data.phone}
-                                </p>
-                                <p>
-                                    username: {data.username}
-                                </p>
-                                {checkWebsite(data.website).valueOf() ?
-                                    <p>
-                                        website: {data.website}
-                                    </p>
-                                    : null}
-                            </div>
-                            <div>
-                                <ButtonCustom onClick={onclick} isDisabled={isEdit} buttonName={"Edit"}/>
-                                <ButtonCustom onClick={null} isDisabled={!isEdit} buttonName={"Save"}/>
-                            </div>
-                        </>
+                        <EmployeeView email={data.email}
+                                      name={data.name}
+                                      phone={data.phone}
+                                      username={data.username}
+                                      website={data.website} setEmployeeInfo=""/>
                     )
                 }
+                <div>
+                    <ButtonCustom onClick={onclick} isDisabled={isEdit} buttonName={"Edit"}/>
+                    <ButtonCustom onClick="" isDisabled={!isEdit} buttonName={"Save"}/>
+                </div>
             </> :
             <Loader/>
     )
