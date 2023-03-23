@@ -10,7 +10,7 @@ interface EmployeeEditProps extends Employee{
     setEmployeeInfo: (param: keyof Employee, value: string) => void;
 }
 
-const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username, website}) => {
+const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username, website, setEmployeeInfo}) => {
 
     const {id} = useParams();
 
@@ -19,24 +19,6 @@ const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username
     // const [inputPhone, setPhone] = useState(phone);
     // const [inputUsername, setUsername] = useState(username);
     // const [inputWebsite, setWebsite] = useState(website);
-
-    function sendRequest() {
-        const request = {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            // body: JSON.stringify({
-            //     name: inputName,
-            //     email: inputEmail,
-            //     phone: inputPhone,
-            //     username: inputUsername,
-            //     website: inputWebsite
-            // })
-        };
-        fetch('https://jsonplaceholder.typicode.com/users/' + id, request)
-            .then(response => response.json())
-            // .then(json => setData(json));
-        console.log(request)
-    }
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
         setEmployeeInfo('name', event.target.value)
@@ -76,3 +58,5 @@ const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username
         </>
     )
 }
+
+export default EmployeeEdit;

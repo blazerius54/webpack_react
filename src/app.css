@@ -14,23 +14,18 @@ h1:hover{
 }
 
 button {
-    background-color: #979ea8;
+    background-color: #1071e5;
     border: none;
-    color: #979ea8;;
+    color: #ffffff;;
     padding: 8px 14px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     border-radius: 4px;
+    cursor: pointer;
 }
 
-button:hover {
-    background-color: #1071e5;
-    /*color:  #1071e5;*/
-}
-
-.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+button:disabled {
+    background-color: #979ea8;
 }

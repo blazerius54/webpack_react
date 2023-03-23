@@ -5,6 +5,7 @@ import checkWebsite from "../utils/appUtil";
 import ButtonCustom from "../components/ButtonCustom";
 import Loader from "../components/Loader";
 import EmployeeView from "./EmployeeView";
+import EmployeeEdit from './EmployeeEdit';
 
 export interface Employee {
     name: string,
@@ -20,47 +21,72 @@ export default function EmployeeCard() {
     const {id} = useParams();
     const [data, setData] = useState<Employee | null>(null);
     const [isEdit, setEdit] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true);
         fetch('https://jsonplaceholder.typicode.com/users/' + id)
             .then(response => response.json())
-            .then(json => setData(json))
-        setIsLoaded(true);
+            .then(json => {
+                setData(json)
+                setIsLoading(false);
+            })
     }, [id])
+
+    function saveEmployee() {
+        setIsLoading(true);
+        const request = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        };
+        fetch('https://jsonplaceholder.typicode.com/users/' + id, request)
+          .then(response => response.json())
+          .then(json => {
+              setData(json)
+              setIsLoading(false);
+              setEdit(false);
+          });
+    }
 
     const onclick = () => {
         setEdit(true)
     }
 
     const setEmployeeInfo = (param: keyof Employee, value: string) => {
-        setData((prev) => (
-            {
-            [param] : value}
-            ))
+        setData((prev) => ({
+            ...prev,
+            [param] : value
+        }))
     }
+
     return (
-        isLoaded ?
+        !isLoading ?
             <>
-                {isEdit ? <EmployeeEdit
-                        email={data.email}
-                        name={data.name}
-                        phone={data.phone}
-                        username={data.username}
-                        website={data.website}/>
-                    :
+                {isEdit ? (
+                    <EmployeeEdit
+                      email={data.email}
+                      name={data.name}
+                      phone={data.phone}
+                      username={data.username}
+                      website={data.website}
+                      setEmployeeInfo={setEmployeeInfo}
+                    />
+                )  :
                     data && (
-                        <EmployeeView email={data.email}
-                                      name={data.name}
-                                      phone={data.phone}
-                                      username={data.username}
-                                      website={data.website} setEmployeeInfo=""/>
+                        <EmployeeView
+                          email={data.email}
+                          name={data.name}
+                          phone={data.phone}
+                          username={data.username}
+                          website={data.website}
+                          setEmployeeInfo=""
+                        />
                     )
                 }
                 <div>
                     <ButtonCustom onClick={onclick} isDisabled={isEdit} buttonName={"Edit"}/>
-                    <ButtonCustom onClick="" isDisabled={!isEdit} buttonName={"Save"}/>
+                    <ButtonCustom onClick={saveEmployee} isDisabled={!isEdit} buttonName={"Save"}/>
                 </div>
             </> :
             <Loader/>
