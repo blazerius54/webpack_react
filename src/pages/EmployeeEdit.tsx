@@ -1,45 +1,32 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import '/src/app.css';
-import {useNavigate, useParams} from 'react-router-dom'
-import checkWebsite from "../utils/appUtil";
-import ButtonCustom from "../components/ButtonCustom";
 import {Employee} from "./EmployeeCard";
-
 
 interface EmployeeEditProps extends Employee{
     setEmployeeInfo: (param: keyof Employee, value: string) => void;
 }
 
-const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username, website}) => {
-
-    const {id} = useParams();
-
-    // const [inputName, setName] = useState(name);
-    // const [inputEmail, setEmail] = useState(email);
-    // const [inputPhone, setPhone] = useState(phone);
-    // const [inputUsername, setUsername] = useState(username);
-    // const [inputWebsite, setWebsite] = useState(website);
-
-    function sendRequest() {
-        const request = {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            // body: JSON.stringify({
-            //     name: inputName,
-            //     email: inputEmail,
-            //     phone: inputPhone,
-            //     username: inputUsername,
-            //     website: inputWebsite
-            // })
-        };
-        fetch('https://jsonplaceholder.typicode.com/users/' + id, request)
-            .then(response => response.json())
-            // .then(json => setData(json));
-        console.log(request)
-    }
+const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username, website,
+                                                       setEmployeeInfo}) => {
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
         setEmployeeInfo('name', event.target.value)
+    }
+
+    const setEmail = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmployeeInfo('email', event.target.value)
+    }
+
+    const setPhone = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmployeeInfo('phone', event.target.value)
+    }
+
+    const setUsername = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmployeeInfo('username', event.target.value)
+    }
+
+    const setWebsite = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmployeeInfo('website', event.target.value)
     }
 
     return (
@@ -49,30 +36,25 @@ const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username
                                 value={name}
                                 onChange={setName}/>
                 </p>
-                {/*<p> email: <input name="email" value={email} onChange={(e) => {*/}
-                {/*    setEmail(e.target.value)*/}
-                {/*}}/>*/}
-                {/*</p>*/}
-                {/*<p> phone: <input name="phone" value={phone} onChange={(e) => {*/}
-                {/*    setPhone(e.target.value)*/}
-                {/*}}/>*/}
-                {/*</p>*/}
-                {/*<p> username: <input name="username" value={username} onChange={(e) => {*/}
-                {/*    setUsername(e.target.value)*/}
-                {/*}}/>*/}
-                {/*</p>*/}
-                {/*{*/}
-                {/*    checkWebsite(website).valueOf() ?*/}
-                {/*        <p>*/}
-                {/*            website: <input name="website"*/}
-                {/*                            value={website} onChange={(e) => {*/}
-                {/*            setWebsite(e.target.value)*/}
-                {/*        }}/>*/}
-                {/*        </p>*/}
-                {/*        : null*/}
-
-                {/*}*/}
+                <p> email:<input name="email"
+                                value={email}
+                                onChange={setEmail}/>
+                </p>
+                <p> phone:<input name="phone"
+                                value={phone}
+                                onChange={setPhone}/>
+                </p>
+                <p> username:<input name="username"
+                                value={username}
+                                onChange={setUsername}/>
+                </p>
+                <p> website:<input name="website"
+                                    value={website}
+                                    onChange={setWebsite}/>
+                </p>
             </div>
         </>
     )
 }
+
+export default EmployeeEdit;
