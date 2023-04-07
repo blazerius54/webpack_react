@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react'
 import '/src/app.css';
 import {Link} from "react-router-dom";
 import Loader from "../components/Loader";
+import {List, ListItemText} from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import Grid from "@mui/material/Grid";
 
 
 export default function EmployeeList() {
@@ -19,15 +22,15 @@ export default function EmployeeList() {
     return (
         isLoaded ?
             <div>
-                <ul>
+                <List component="nav">
                     {data.map(record => (
-                        <Link key={record.id} to={'/employee/' + record.id}>
-                            <li>{record.name}</li>
-                        </Link>
+                        <ListItem button component={Link} to={'/employee/' + record.id}>
+                            <ListItemText primary={record.name}/>
+                        </ListItem>
                     ))}
-                </ul>
+                </List>
             </div>
             :
             <Loader/>
-        );
+    );
 }

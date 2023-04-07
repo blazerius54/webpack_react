@@ -1,13 +1,18 @@
 import React, {ChangeEvent} from 'react';
 import '/src/app.css';
 import {Employee} from "./EmployeeCard";
+import {Box} from "@mui/material";
+import Card from "@mui/material/Card";
+import TextField from "@mui/material/TextField";
 
-interface EmployeeEditProps extends Employee{
+interface EmployeeEditProps extends Employee {
     setEmployeeInfo: (param: keyof Employee, value: string) => void;
 }
 
-const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username, website,
-                                                       setEmployeeInfo}) => {
+const EmployeeEdit: React.FC<EmployeeEditProps> = ({
+                                                       name, email, phone, username, website,
+                                                       setEmployeeInfo
+                                                   }) => {
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
         setEmployeeInfo('name', event.target.value)
@@ -32,26 +37,45 @@ const EmployeeEdit: React.FC<EmployeeEditProps> = ({name, email, phone, username
     return (
         <>
             <div>
-                <p> name:<input name="name"
-                                value={name}
-                                onChange={setName}/>
-                </p>
-                <p> email:<input name="email"
-                                value={email}
-                                onChange={setEmail}/>
-                </p>
-                <p> phone:<input name="phone"
-                                value={phone}
-                                onChange={setPhone}/>
-                </p>
-                <p> username:<input name="username"
-                                value={username}
-                                onChange={setUsername}/>
-                </p>
-                <p> website:<input name="website"
-                                    value={website}
-                                    onChange={setWebsite}/>
-                </p>
+                <Box component="form"
+                     sx={{
+                         '& .MuiTextField-root': { m: 1, width: '25ch' },
+                     }}
+                     noValidate
+                     autoComplete="off">
+                    <Card>
+                        <TextField
+                            id="outlined-helperText"
+                            label="Name"
+                            defaultValue={name}
+                            onChange={setName}
+                        />
+                        <TextField
+                            id="outlined-helperText"
+                            label="Email"
+                            defaultValue={email}
+                            onChange={setEmail}
+                        />
+                        <TextField
+                            id="outlined-helperText"
+                            label="Phone"
+                            defaultValue={phone}
+                            onChange={setPhone}
+                        />
+                        <TextField
+                            id="outlined-helperText"
+                            label="Username"
+                            defaultValue={username}
+                            onChange={setUsername}
+                        />
+                        <TextField
+                            id="outlined-helperText"
+                            label="website"
+                            defaultValue={website}
+                            onChange={setWebsite}
+                        />
+                    </Card>
+                </Box>
             </div>
         </>
     )

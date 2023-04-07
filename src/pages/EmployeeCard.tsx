@@ -5,6 +5,7 @@ import ButtonCustom from "../components/ButtonCustom";
 import Loader from "../components/Loader";
 import EmployeeView from "./EmployeeView";
 import EmployeeEdit from './EmployeeEdit';
+import {Button} from "@mui/material";
 
 export interface Employee {
     name: string,
@@ -79,8 +80,8 @@ export default function EmployeeCard() {
                     )
                 }
                 <div>
-                    <ButtonCustom onClick={onclick} isDisabled={isEdit} buttonName={"Edit"}/>
-                    <ButtonCustom onClick={saveEmployee} isDisabled={!isEdit} buttonName={"Save"}/>
+                    <Button variant="contained" disabled={isEdit} onClick={onclick}>Edit</Button>
+                    <Button variant="contained" disabled={!isEdit} onClick={saveEmployee}>Save</Button>
                 </div>
             </> :
             <Loader/>
